@@ -37,7 +37,7 @@ import editModal from './common/editModel';
 
 export default {
   props: ['propsdata'],
-  data : () => {
+  data : function() {
     return {
       editTodoItem: '',
       oldTodoItem:'',
@@ -46,12 +46,12 @@ export default {
     }
   },
   methods: {
-    editReady: (todoItem, index) => {
+    editReady: function(todoItem, index) {
       this.getModal = true;
       this.oldTodoItem = todoItem;
       this.getIndex = index;
     },
-    editTodo: (oldItem, newItem, index) => {
+    editTodo: function(oldItem, newItem, index) {
       if(newItem !==''){
         this.$emit('editItem', oldItem, newItem, index);
         this.oldTodoItem ='';
@@ -60,10 +60,10 @@ export default {
         this.getIndex = -1;
       } 
     },
-    removeTodo: (todoItem, index) => {
+    removeTodo: function(todoItem, index) {
       this.$emit('removeItem', todoItem, index); 
     },
-    toggleComplete: (todoItem, index) => {
+    toggleComplete: function(todoItem, index) {
       this.$emit('toggleItem', todoItem, index);
     }
   },
