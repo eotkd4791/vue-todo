@@ -17,19 +17,19 @@ import TodoList   from './components/TodoList.vue';
 import TodoFooter from './components/TodoFooter.vue';
 
 export default {
-  data: function() {
+  data: () => {
     return {
       todoItems:[],
     }
   },
   methods: {
-    addOneItem: function(todoItem) {
+    addOneItem: (todoItem) => {
       const obj = {completed: false, item: todoItem};
       localStorage.setItem(todoItem, JSON.stringify(obj));
       this.todoItems.push(obj);
     },
 
-    editOneItem: function(oldItem, newItem, index) {
+    editOneItem: (oldItem, newItem, index) => {
       window.console.log("App",index);
       localStorage.removeItem(oldItem.item);
       this.todoItems[index].item = newItem;
@@ -37,25 +37,25 @@ export default {
       localStorage.setItem(newItem,JSON.stringify(obj));
     },
 
-    removeOneItem: function(todoItem, index) {
+    removeOneItem: (todoItem, index) => {
       localStorage.removeItem(todoItem.item);
       this.todoItems.splice(index, 1);
       //특정 인덱스에서 하나를 지운다. 기존의 배열을 수정하고 새로운 배열을 만들어 반환.
       //slice는 원래 배열은 수정하지 않고 지운다. 
     },
 
-    toggleOneItem: function(todoItem, index) {
+    toggleOneItem: (todoItem, index) => {
       this.todoItems[index].completed = !this.todoItems[index].completed
       localStorage.removeItem(todoItem.item);
       localStorage.setItem(todoItem.item, JSON.stringify(todoItem));
     },
     
-    clearAllItems : function() {
+    clearAllItems : () => {
       localStorage.clear();
       this.todoItems = [];
     }
   },
-  created: function() {
+  created: () => {
     if(localStorage.length > 0) {
       for(let i = 0; i<localStorage.length; i++) {
         if(localStorage.key(i) !== 'loglevel:webpack-dev-server'){
