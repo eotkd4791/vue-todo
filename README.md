@@ -1,2 +1,24 @@
 # vue-todo
-캡틴판교님의 Vue.js강의를 수강하면서 간단한 Todolist를 업데이트 버튼을 추가하여 구현하였습니다.
+
+## Project setup
+```
+npm install
+```
+
+### Compiles and hot-reloads for development
+```
+npm run serve
+```
+
+### Compiles and minifies for production
+```
+npm run build
+```
+
+### Lints and fixes files
+```
+npm run lint
+```
+
+### Customize configuration
+See [Configuration Reference](https://cli.vuejs.org/config/).

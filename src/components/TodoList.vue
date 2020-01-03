@@ -1,7 +1,7 @@
 <template>
   <div>
     <transition-group name="list" tag="ul">
-      <li v-for="(todoItem, index) in propsdata" v-bind:key="todoItem.item" class="shadow">
+      <li v-for="(todoItem, index) in this.$store.state.todoItems" v-bind:key="todoItem.item" class="shadow">
         <i class="checkBtn fas fa-check" v-bind:class="{checkBtnCompleted: todoItem.completed}" 
             v-on:click="toggleComplete(todoItem, index)"></i>
         <span v-bind:class="{textCompleted: todoItem.completed}">{{ todoItem.item }}</span>
@@ -17,18 +17,22 @@
       </li>
     </transition-group>
     <!-- Modal창 띄우기 -->
-    <eModal v-if="getModal" @close="getModal=false">
+    <editModal v-if="getModal" @close="getModal=false">
       <h3 slot="eheader">
         일정 수정하기
       </h3>
       <div slot="ebody" class="inputBox">
-        <input slot="ebody" placeholder="수정할 내용을 입력해주세요!" v-model="editTodoItem" v-on:keypress.enter="editTodo(oldTodoItem, editTodoItem, getIndex)">
+        <input slot="ebody" 
+          placeholder="수정할 내용을 입력해주세요!" 
+          v-model="editTodoItem" 
+          v-on:keypress.enter="editTodo(oldTodoItem, editTodoItem, getIndex)">
       </div>
       <div slot="efooter">
-        <i class="yesModalBtn far fa-check-circle" @click="editTodo(oldTodoItem,editTodoItem,getIndex)"></i>
-        <i class="noModalBtn fas fa-times" @click="getModal=false"></i>
+        <i class="yesModalBtn far fa-check-circle" 
+          @click="editTodo(oldTodoItem, editTodoItem, getIndex)"></i>
+        <i class="noModalBtn fas fa-times" @click="getModal=false, editTodoItem=''"></i>
       </div>
-    </eModal>
+    </editModal>
   </div>
 </template>
 
@@ -36,8 +40,7 @@
 import editModal from './common/editModel';
 
 export default {
-  props: ['propsdata'],
-  data : function() {
+  data() {
     return {
       editTodoItem: '',
       oldTodoItem:'',
@@ -46,29 +49,29 @@ export default {
     }
   },
   methods: {
-    editReady: function(todoItem, index) {
+    editReady(todoItem, index) {
       this.getModal = true;
       this.oldTodoItem = todoItem;
       this.getIndex = index;
     },
-    editTodo: function(oldItem, newItem, index) {
+    editTodo(oldItem, newItem, index) {
       if(newItem !==''){
-        this.$emit('editItem', oldItem, newItem, index);
+        this.$store.commit('editOneItem', {oldItem, newItem, index});
         this.oldTodoItem ='';
         this.editTodoItem='';
         this.getModal = false;
         this.getIndex = -1;
       } 
     },
-    removeTodo: function(todoItem, index) {
-      this.$emit('removeItem', todoItem, index); 
+    removeTodo(todoItem, index) {
+      this.$store.commit('removeOneItem',{todoItem, index});
     },
-    toggleComplete: function(todoItem, index) {
-      this.$emit('toggleItem', todoItem, index);
+    toggleComplete(todoItem, index) {
+      this.$store.commit('toggleOneItem',{todoItem, index});
     }
   },
   components: {
-    eModal : editModal
+    editModal
   }
 }
 </script>

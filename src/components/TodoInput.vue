@@ -5,13 +5,13 @@
       <i class="fas fa-plus addBtn"></i>
     </span>
 
-    <Modal v-if="showModal" @close="showModal=false">
+    <alertModal v-if="showModal" @close="showModal=false">
       <h3 slot="header">
         Warning!
         <i class="closeModalBtn fas fa-times" @click="showModal=false"></i>
       </h3>
       <div slot="body">공백을 입력할 수 없습니다.</div>
-    </Modal>
+    </alertModal>
   </div>
 </template>
 
@@ -19,27 +19,25 @@
 import alertModal from './common/alertModal.vue';
 
 export default {
-  data: function() {
+  data() {
     return {
       newTodoItem: '',
       showModal: false
     }
   },
   methods: {
-    addTodo: function() {
+    addTodo() {
       if(this.newTodoItem !== '') {
-        this.$emit('addTodoItem',this.newTodoItem);
+        this.$store.commit('addOneItem', this.newTodoItem);
         this.clearInput();
-      } else {
-        this.showModal = !this.showModal;
-      }
+      } else { this.showModal = !this.showModal; }
     },
-    clearInput: function() {
+    clearInput() {
       this.newTodoItem='';
     }
   },
   components: {
-    Modal : alertModal
+    alertModal
   }
 }
 </script>
