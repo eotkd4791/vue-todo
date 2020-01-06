@@ -63,7 +63,7 @@ export default {
       this.getIndex = index;
     },
     editTodo(oldItem, newItem, index) {
-      if(newItem !==''){
+      if(newItem !=='') {
         this.$store.commit('editOneItem', {oldItem, newItem, index});
         this.oldTodoItem ='';
         this.editTodoItem='';
