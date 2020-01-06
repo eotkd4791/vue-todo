@@ -24,15 +24,20 @@ export const store = new Vuex.Store({ //store변수를 외부에서 사용가능
 	state: {
 		todoItems : storage.fetch()
 	},
+	getters: {
+		storedTodoItems(state) {
+			return state.todoItems;
+		} 
+	},
 	mutations : {
 		addOneItem(state, todoItem) {
-      const obj = {completed: false, item: todoItem};
-      localStorage.setItem(todoItem, JSON.stringify(obj));
-      state.todoItems.push(obj);
+		const obj = {completed: false, item: todoItem};
+		localStorage.setItem(todoItem, JSON.stringify(obj));
+		state.todoItems.push(obj);
 		},
 		editOneItem(state, payload) {
 			window.console.log('editOneItem', payload);
-      localStorage.removeItem(payload.oldItem);
+      localStorage.removeItem(payload.oldItem.item);
       state.todoItems[payload.index].item = payload.newItem;
       const newObj = {completed: payload.oldItem.completed, item: payload.newItem};
       localStorage.setItem(payload.newItem,JSON.stringify(newObj));
@@ -46,9 +51,9 @@ export const store = new Vuex.Store({ //store변수를 외부에서 사용가능
       localStorage.removeItem(payload.todoItem.item);
       localStorage.setItem(payload.todoItem.item, JSON.stringify(payload.todoItem));
 		},
-		clearAllItems(state) {
+    clearAllItems(state) {
       localStorage.clear();
       state.todoItems = [];
-    }
+		}
 	}
 });
