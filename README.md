@@ -1,24 +1,4 @@
 # vue-todo
 
-## Project setup
-```
-npm install
-```
 
-### Compiles and hot-reloads for development
-```
-npm run serve
-```
-
-### Compiles and minifies for production
-```
-npm run build
-```
-
-### Lints and fixes files
-```
-npm run lint
-```
-
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+Vue.js를 이용하여 간단한 투두리스트를 만들었습니다. 서버 없이 로컬 스토리지를 이용하였고, Update(일정 수정)기능을 추가하였습니다.
